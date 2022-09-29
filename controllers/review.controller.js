@@ -1,11 +1,11 @@
-const { Review } = require('../models/review.model');
+const { Review } = require("../models/review.model");
 
 const getAllReviews = async (req, res) => {
   try {
     const review = await Review.findAll();
 
     res.status(200).json({
-      status: 'sucess',
+      status: "sucess",
       data: {
         review,
       },
@@ -26,7 +26,7 @@ const createReview = async (req, res) => {
       rating,
     });
     res.status(201).json({
-      status: 'sucess',
+      status: "sucess",
       data: { newReview },
     });
   } catch (error) {
@@ -40,7 +40,7 @@ const updateReview = async (req, res) => {
   await review.update({ comment, rating });
 
   res.status(201).json({
-    status: 'sucess',
+    status: "sucess",
     data: { review },
   });
 };
@@ -48,10 +48,10 @@ const updateReview = async (req, res) => {
 const deleteReview = async (req, res) => {
   try {
     const { review } = req;
-    await review.update({ status: 'deleted' });
+    await review.update({ status: "deleted" });
 
     res.status(200).json({
-      status: 'sucess',
+      status: "sucess",
     });
   } catch (error) {
     console.log(error);

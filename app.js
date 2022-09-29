@@ -1,22 +1,30 @@
-const express = require('express');
+const express = require("express");
 
 //Routers
-const { usersRouter } = require('./routes/users.route');
-const { restaurantRouter } = require('./routes/restaurant.route');
-const { reviewRouter } = require('./routes/review.route');
+const { usersRouter } = require("./routes/users.route");
+const { restaurantRouter } = require("./routes/restaurant.route");
+const { reviewRouter } = require("./routes/review.route");
 
+//controllers
+const { globalErrorHandler } = require("./controllers/error.controller");
+// Init our Express app
 const app = express();
 
-app.use(express.json()); // middelware
+// Enable Express app to receive JSON data
+app.use(express.json());
 
-app.use('/api/v1/users', usersRouter);
-app.use('/api/v1/restaurants', restaurantRouter);
-app.use('/api/v1/restaurants', reviewRouter);
+// Define endpoints
+app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/restaurants", restaurantRouter);
+app.use("/api/v1/restaurants", reviewRouter);
+
+// Global error handler
+app.use(globalErrorHandler);
 
 //Catch non-existing endpoints -- preguntar!
-app.all('*', (req, res) => {
+app.all("*", (req, res) => {
   res.status(404).json({
-    status: 'Error',
+    status: "Error",
     message: `${req.method} ${req.url} does not exists ir our server`,
   });
 });
